@@ -30,7 +30,7 @@ A simple and elegant wedding RSVP website that integrates with Google Sheets to 
    - Update `SHEET_ID` in [`scripts/google-apps-script.js`](scripts/google-apps-script.js#L4)
    - Deploy the script as a web app
    - Copy the deployed web app URL
-   - Update the fetch URL in [`index.html`](index.html#L177) (replace `'GOOGLE_APPS_SCRIPT_WEB_APP_URL'`)
+   - Update the fetch URL in [`index.html`](index.html#L211) (replace `'GOOGLE_APPS_SCRIPT_WEB_APP_URL'` with the URL from the deployment)
 3. Customize the form:
    - Update form fields and labels in `index.html`
    - Modify styles in `styles/styles.css` as needed
