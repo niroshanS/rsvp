@@ -26,15 +26,18 @@ A simple and elegant wedding RSVP website that integrates with Google Sheets to 
 2. Set up Google Apps Script:
    - Create a new Google Apps Script project
    - Create a Google Sheet for storing RSVP responses
+   - Copy your Google Sheet ID from the URL (it's the long string between /d/ and /edit in your sheet's URL)
+   - Update `SHEET_ID` in [`scripts/google-apps-script.js`](scripts/google-apps-script.js#L4)
    - Deploy the script as a web app
-   - Update the form action URL in `index.html` with your deployed script URL
+   - Copy the deployed web app URL
+   - Update the fetch URL in [`index.html`](index.html#L177) (replace `'GOOGLE_APPS_SCRIPT_WEB_APP_URL'`)
 3. Customize the form:
    - Update form fields and labels in `index.html`
    - Modify styles in `styles/styles.css` as needed
 
 ## Google Apps Script Integration
 
-The `google-apps-script.js` file contains the server-side code that:
+The [`google-apps-script.js`](scripts/google-apps-script.js) file contains the server-side code that:
 - Handles form submissions
 - Validates input data
 - Stores responses in a Google Sheet
@@ -43,7 +46,7 @@ The `google-apps-script.js` file contains the server-side code that:
 ## Development
 
 To modify the project:
-1. Update the HTML form in `index.html`
+1. Update the HTML form in [`index.html`](index.html)
 2. Modify styles in `styles/styles.css`
 3. Adjust the Google Apps Script code as needed for your data collection requirements
 
