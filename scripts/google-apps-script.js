@@ -23,10 +23,10 @@ function doPost(e) {
       const headers = [
         'Timestamp', 
         'Name', 
-        'Email', 
+        'Email',
+        'Phone',
         'Attending', 
         'Number of Guests',
-        'Dietary Restrictions',
         'Message'
       ];
       sheet.appendRow(headers);
@@ -44,9 +44,9 @@ function doPost(e) {
       data.timestamp || new Date().toISOString(),
       data.name || '',
       data.email || '',
+      data.phone || '',
       data.attending || '',
       data.guests || '',
-      data.dietary || '',
       data.message || ''
     ];
     
@@ -95,10 +95,10 @@ function setupSheet() {
   const headers = [
     'Timestamp', 
     'Name', 
-    'Email', 
+    'Email',
+    'Phone',
     'Attending', 
     'Number of Guests',
-    'Dietary Restrictions',
     'Message'
   ];
   
