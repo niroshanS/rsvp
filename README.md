@@ -1,68 +1,59 @@
 # Wedding RSVP Website
 
-An elegant and responsive wedding RSVP website built with HTML, CSS, and JavaScript. Features a beautiful design with floral elements and interactive RSVP functionality.
+A simple and elegant wedding RSVP website that integrates with Google Sheets to collect and manage guest responses.
 
 ## Features
 
-- 🎨 Elegant design with floral decorations and custom typography
-- 📱 Fully responsive layout for all devices
-- ✨ Interactive RSVP form with real-time validation
-- 🎉 Celebratory confetti animation for accepted RSVPs
+- 📝 Simple and clean RSVP form
 - 📊 Google Sheets integration for response tracking
-- 💫 Smooth animations and transitions
-- 🎯 Form validation and error handling
+- ✨ Form validation and error handling
+- 📱 Mobile-responsive design
 
 ## Project Structure
 
 ```
-├── index.html              # Main HTML file
+├── index.html              # Main HTML file with RSVP form
 ├── styles/
-│   └── styles.css         # Stylesheet with all styling
+│   └── styles.css         # Core styling and layout
 ├── scripts/
-│   └── google-apps-script.js  # Google Apps Script integration
-├── images/
-│   ├── murugan.png        # Decorative header image
-│   └── flowers.png        # Floral decorations
+│   └── google-apps-script.js  # Google Apps Script for form handling
 └── README.md              # Project documentation
 ```
 
 ## Setup Instructions
 
-1. Clone or download this repository
+1. Clone this repository
 2. Set up Google Apps Script:
    - Create a new Google Apps Script project
-   - Set up a Google Sheet for storing RSVP responses
+   - Create a Google Sheet for storing RSVP responses
    - Deploy the script as a web app
-   - Replace the placeholder URL in `index.html` with your deployed script URL
-3. Customize the wedding details:
-   - Update names, date, and venue information in `index.html`
-   - Modify colors and styling in `styles/styles.css`
-   - Replace images in the `images/` directory with your own
-4. Deploy to your preferred web hosting service
+   - Update the form action URL in `index.html` with your deployed script URL
+3. Customize the form:
+   - Update form fields and labels in `index.html`
+   - Modify styles in `styles/styles.css` as needed
 
-## Customization
+## Google Apps Script Integration
 
-### Colors
-The site uses a elegant color palette that can be customized in `styles/styles.css`:
-- Primary: #9c2542 (Burgundy)
-- Secondary: #d4af37 (Gold)
-- Background: #fff8f0 (Cream)
-- Text: #5d3a3a (Deep Brown)
+The `google-apps-script.js` file contains the server-side code that:
+- Handles form submissions
+- Validates input data
+- Stores responses in a Google Sheet
+- Returns success/error messages to the form
 
-### Typography
-- "Great Vibes" for decorative headings
-- "Cormorant Garamond" for body text
+## Development
 
-### Images
-- Replace `murugan.png` and `flowers.png` in the `images/` directory with your own images
-- Adjust image styling in `styles/styles.css` as needed
+To modify the project:
+1. Update the HTML form in `index.html`
+2. Modify styles in `styles/styles.css`
+3. Adjust the Google Apps Script code as needed for your data collection requirements
 
 ## Browser Support
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+Tested and working in modern browsers:
+- Chrome
+- Firefox
+- Safari
+- Edge
 
 ## Credits
 
