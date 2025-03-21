@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<!--
+  Wedding RSVP Website
+  
+  Setup Instructions:
+  1. Replace 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL' with your deployed Google Apps Script URL
+  2. Customize the wedding details (names, date, RSVP deadline)
+  3. Upload your own photos to replace happy-sugu.png, happy-niro.png, mad-sugu.png, and mad-niro.png
+  4. Deploy to your web hosting service
+  
+  Features:
+  - Elegant RSVP form with attendance confirmation
+  - Confetti animation for acceptance responses
+  - Google Sheets integration for response tracking
+  - Responsive design for mobile and desktop
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wedding RSVP</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Add confetti.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="murugan-image"></div>
+      <h1>Save the Date</h1>
+      <div class="wedding-of">FOR THE WEDDING OF</div>
+      <div class="names">Person A & Person B</div>
+      <h2 class="date">April 20, 2020</h2>
+      <div>Please RSVP by January 15, 2020</div>
+
+      <div class="venue-details">
+        <h2>Venue Details</h2>
+        <p><strong>Wedding Convention Center</strong></p>
+        <p>123 Fake Ave</p>
+        <p>City, NY 123 567</p>
+        <p>Ceremony begins at 5:00 PM</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <form id="rsvp-form">
+        <div class="form-group">
+          <label for="name">Full Name(s)</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email (Optional)</label>
+          <input type="email" id="email" name="email" />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number (Optional)</label>
+          <input type="tel" id="phone" name="phone" />
+        </div>
+
+        <div class="form-group">
+          <label>Will you be attending?</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input
+                type="radio"
+                id="attending-yes"
+                name="attending"
+                value="yes"
+                required
+              />
+              <label for="attending-yes">Accept</label>
+            </div>
+
+            <div class="radio-option">
+              <input 
+                type="radio" 
+                id="attending-no" 
+                name="attending" 
+                value="no" 
+              />
+              <label for="attending-no">Decline</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" id="guests-group">
+          <label for="guests">Number of Guests (including yourself)</label>
+          <select id="guests" name="guests">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <p class="info-text">
+            Please note: A buffet will be served.
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message to the Couple (Optional)</label>
+          <textarea id="message" name="message"></textarea>
+        </div>
+
+        <button type="submit">Submit RSVP</button>
+      </form>
+
+      <div class="success-message" id="success-message">
+        Thank you for your RSVP! We look forward to celebrating with you.
+      </div>
+
+      <div class="error-message" id="error-message">
+        There was an error submitting your RSVP. Please try again later.
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("rsvp-form");
+        const successMessage = document.getElementById("success-message");
+        const errorMessage = document.getElementById("error-message");
+        const attendingYes = document.getElementById("attending-yes");
+        const attendingNo = document.getElementById("attending-no");
+        const guestsGroup = document.getElementById("guests-group");
+        
+        const happyPhotos = document.getElementById("happy-photos");
+        const sadPhotos = document.getElementById("sad-photos");
+        
+        // Function to create confetti celebration
+        function startConfetti() {
+          var duration = 5000; // Longer duration for more elegant fall
+          var end = Date.now() + duration;
+          var colors = [
+            '#d4af37',  // Gold
+            '#9c2542',  // Burgundy
+            '#8B4513',  // Saddle Brown
+            '#fff8f5',  // Light cream
+            '#ffefdb',  // Warm cream
+            '#5d3a3a'   // Deep brown
+          ];
+          var frameRate = 25; // Slightly slower for more elegance
+          
+          // Create more spaced out confetti bursts
+          (function frame() {
+            confetti({
+              particleCount: 12, // Fewer particles for elegance
+              angle: 270, // Straight down
+              spread: 160, // More spread to cover entire width
+              origin: { x: 0.5, y: -0.5 }, // Random horizontal position from top
+              colors: colors,
+              gravity: 0.5, // Slower fall
+              scalar: 1.2, // Slightly larger confetti
+              drift: 0, // No drift
+              ticks: 700 // More ticks so confetti reaches bottom
+            });
+            
+            if (Date.now() < end) {
+              setTimeout(frame, 1000 / frameRate);
+            }
+          }());
+        }
+
+        // Hide/show relevant fields based on attendance
+        attendingYes.addEventListener("change", function () {
+          guestsGroup.style.display = "block";
+          
+          // Remove small confetti burst when selecting "Yes"
+        });
+
+        attendingNo.addEventListener("change", function () {
+          guestsGroup.style.display = "none";
+        });
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          
+          // Check if attending is "yes" to show confetti
+          if (attendingYes.checked) {
+            // Start confetti celebration
+            startConfetti();
+          }
+
+          // Gather form data
+          const formData = new FormData(form);
+          const rsvpData = {};
+          for (const [key, value] of formData.entries()) {
+            rsvpData[key] = value;
+          }
+          
+          // Add timestamp
+          rsvpData.timestamp = new Date().toISOString();
+          
+          // Show loading state
+          const submitButton = form.querySelector('button[type="submit"]');
+          const originalButtonText = submitButton.textContent;
+          submitButton.textContent = "Submitting...";
+          submitButton.disabled = true;
+
+          // Send data to Google Apps Script
+          // Note: Replace this URL with your deployed web app URL from Google Apps Script
+          // The URL should look like: https://script.google.com/macros/s/AKfycbz.../exec
+          fetch('GOOGLE_APPS_SCRIPT_WEB_APP_URL', {
+            method: 'POST',
+            body: JSON.stringify(rsvpData),
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            mode: 'no-cors' // Add this to handle CORS
+          })
+          .then(response => {
+            // Since we're using no-cors, we can't read the response
+            // We'll assume success if we get here
+            form.style.display = "none";
+            document.querySelector('h2').style.display = 'none';
+            successMessage.style.display = "block";
+            localStorage.setItem("weddingRSVP", JSON.stringify(rsvpData));
+          })
+          .catch(error => {
+            console.error("Error:", error);
+            errorMessage.textContent = "There was an error submitting your RSVP. Please try again later.";
+            errorMessage.style.display = "block";
+            
+            // Reset button
+            submitButton.textContent = originalButtonText;
+            submitButton.disabled = false;
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
